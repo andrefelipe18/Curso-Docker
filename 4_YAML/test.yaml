@@ -1,0 +1,11 @@
+#Instruções do programa 
+nome: "Matheus"
+idade: 30  #Esta é a idade do usuario 
+
+
+objeto: {a: 1, b: 2, c: 3}
+objeto2:
+  chave1: 1
+  chave2: 2
+  chave3: 3
+
