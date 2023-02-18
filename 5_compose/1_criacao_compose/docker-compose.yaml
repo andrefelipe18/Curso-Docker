@@ -1,0 +1,28 @@
+version: '3.3' # Versão do docker-compose
+
+services: # Serviços que serão executados
+  db: # Container de MySQL
+    image: mysql:5.7 # FROM mysql:5.7
+    volumes: # Volumes que serão mapeados
+      - db_data:/var/lib/mysql # Mapeia o volume db_data para o diretório /var/lib/mysql do container
+    restart: always # Sempre que o docker for reiniciado, o container será reiniciado
+    environment: # Variáveis de ambiente
+      MYSQL_ROOT_PASSWORD: root # Senha do usuário root do MySQL
+      MYSQL_DATABASE: db_docker # Nome do banco de dados
+      MYSQL_USER: root # Nome do usuário do banco de dados
+      MYSQL_PASSWORD: root # Senha do usuário do banco de dados
+
+  wordpress: # Container do WordPress
+    depends_on:  # Dependência do container db
+      - db # Container db
+    image: wordpress:latest # FROM wordpress:latest
+    ports: # Portas que serão mapeadas
+      - "8000:80" # Mapeia a porta 8000 do host para a porta 80 do container
+    restart: always # Sempre que o docker for reiniciado, o container será reiniciado
+    environment: 
+      WORDPRESS_DB_HOST: db:3306 # Endereço do container db
+      WORDPRESS_DB_USER: root # Usuário do banco de dados
+      WORDPRESS_DB_PASSWORD: root # Senha do usuário do banco de dados
+      WORDPRESS_DB_NAME: db_docker # Nome do banco de dados
+volumes:
+  db_data: {}
